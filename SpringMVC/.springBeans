@@ -12,6 +12,7 @@
 		<config>WebContent/WEB-INF/spring-security.xml</config>
 	</configs>
 	<autoconfigs>
+		<config>WebContent/WEB-INF/root-context.xml</config>
 	</autoconfigs>
 	<configSets>
 	</configSets>

@@ -20,9 +20,10 @@
     <link href="resources/css/login.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-
+    <!-- <link href="resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"> 
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">-->
+	<link href='http://fonts.googleapis.com/css?family=Lora:400,700' rel='stylesheet' type='text/css'>
+	
 	<!-- login javascript -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
@@ -75,10 +76,10 @@
                         <h1>Personal Cloud Storage</h1>
                         <h3>Xiaoyong's project</h3>
                         <hr class="intro-divider">
-                        <ul class="list-inline intro-social-buttons">
-                            <li>
-                            	<button type="button" class="btn btn-default btn-lg btn-block" id="myBtn"> Login</button>
-                            </li>
+                        <ul class="intro-social-buttons">
+                            <!-- <li> -->
+                            	<button type="button" class="btn btn-primary custom-size" id="myBtn"> Login</button>
+                            <!-- </li> -->
 
                         </ul>
                     </div>
