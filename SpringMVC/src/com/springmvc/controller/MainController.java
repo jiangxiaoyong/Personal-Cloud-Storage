@@ -98,14 +98,14 @@ public class MainController {
     @Autowired
     private FileUploadService uploadService;
 
-    @RequestMapping(value = { "/", "/welcome**" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "/", "/upload**" }, method = RequestMethod.GET)
     public String home() {
           
           // will be resolved to /views/fileUploader.jsp
           return "fileUploader";
     }
  
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    @RequestMapping(value = "/uploadFiles", method = RequestMethod.POST)
     public @ResponseBody
     List<UploadedFile> upload(MultipartHttpServletRequest request,
                  HttpServletResponse response) throws IOException {
