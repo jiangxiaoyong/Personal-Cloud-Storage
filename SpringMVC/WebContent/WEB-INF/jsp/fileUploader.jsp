@@ -28,7 +28,7 @@
                      </div>
                      <div class="panel-body">
                            <div>
-                                  <form id="dropzone-form" class="dropzone"
+                                  <form id="dropzone-form" class="dropzone" method="post" action="./upload?${_csrf.parameterName}=${_csrf.token}"
                                          enctype="multipart/form-data">
 
                                          <div class="dz-default dz-message file-dropzone text-center well col-sm-12">
@@ -40,6 +40,7 @@
 
                                          <!-- this is were the previews should be shown. -->
                                          <div class="dropzone-previews"></div>
+										 
                                   </form>
                                   <hr>
                                   <button id="upload-button" class="btn btn-primary">

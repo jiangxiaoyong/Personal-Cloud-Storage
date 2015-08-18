@@ -101,7 +101,7 @@ public class MainController {
     @RequestMapping(value = { "/", "/welcome**" }, method = RequestMethod.GET)
     public String home() {
           
-          // will be resolved to /views/fileUploader.jsp      
+          // will be resolved to /views/fileUploader.jsp
           return "fileUploader";
     }
  
@@ -110,6 +110,7 @@ public class MainController {
     List<UploadedFile> upload(MultipartHttpServletRequest request,
                  HttpServletResponse response) throws IOException {
 
+    	  System.out.println("in upload");
           // Getting uploaded files from the request object
           Map<String, MultipartFile> fileMap = request.getFileMap();
 
@@ -196,6 +197,6 @@ public class MainController {
     }
 
     private String getDestinationLocation() {
-          return "D:/uploaded-files/";
+          return "/home/jxy/uploaded-files/";
     }    
 }

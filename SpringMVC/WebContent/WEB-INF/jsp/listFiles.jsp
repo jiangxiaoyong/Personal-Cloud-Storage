@@ -6,7 +6,7 @@
 <head>
 <meta charset="utf-8" name="viewport"
 	content="width=device-width, initial-scale=1">
-<title>Spring MVC + Dropzone.js Example</title>
+<title>My Cloud Storage</title>
 
 <link rel="stylesheet" type="text/css"
 	href="resources/libs/bootstrap-3.1.1/css/bootstrap.min.css">
@@ -20,7 +20,7 @@
 	<div class="container">
 		<div class="panel panel-default">
 			<div class="panel-heading text-center">
-				<h3>Spring MVC + Dropzone.js Example</h3>
+				<h3>My Cloud Storage</h3>
 			</div>
 			<div class="panel-body">
 

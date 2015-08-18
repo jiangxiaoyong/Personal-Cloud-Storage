@@ -17,7 +17,7 @@ $(document).ready(function() {
 	// "dropzoneForm" is the camel-case version of the form id "dropzone-form"
 	Dropzone.options.dropzoneForm = {
 
-		url : "upload",
+		//url : "upload",
 		autoProcessQueue : false,
 		uploadMultiple : true,
 		maxFilesize : 256, // MB
