@@ -98,12 +98,12 @@
     <dependency>
            <groupId>commons-dbcp</groupId>
            <artifactId>commons-dbcp</artifactId>
-           <version>${apache-connection-pooling-version}</version>
+           <version>1.4</version>
     </dependency>
     <dependency>
            <groupId>commons-pool</groupId>
            <artifactId>commons-pool</artifactId>
-           <version>${apache-connection-pooling-version}</version>
+           <version>1.6</version>
     </dependency>
 
     <!-- Spring security -->

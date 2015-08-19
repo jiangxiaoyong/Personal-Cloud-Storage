@@ -24,7 +24,7 @@
 			</div>
 			<div class="panel-body">
 
-				<a class="btn btn-primary" href="${pageContext.request.contextPath}">
+				<a class="btn btn-primary" href="${pageContext.request.contextPath}/upload">
 					<span class="glyphicon glyphicon-chevron-left"></span> Go Back</a> <br>
 				<br>
 				<h4>List of All Uploaded Files</h4>
