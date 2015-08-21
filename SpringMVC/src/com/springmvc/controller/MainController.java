@@ -98,7 +98,7 @@ public class MainController {
     @Autowired
     private FileUploadService uploadService;
 
-    @RequestMapping(value = { "/", "/upload**" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "/", "/upload" }, method = RequestMethod.GET)
     public String home() {
           
           // will be resolved to /views/fileUploader.jsp

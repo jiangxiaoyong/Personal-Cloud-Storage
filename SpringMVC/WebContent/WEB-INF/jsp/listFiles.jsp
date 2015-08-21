@@ -23,9 +23,12 @@
 				<h3>My Cloud Storage</h3>
 			</div>
 			<div class="panel-body">
-
-				<a class="btn btn-primary" href="${pageContext.request.contextPath}/upload">
-					<span class="glyphicon glyphicon-chevron-left"></span> Go Back</a> <br>
+				
+			    <div class="col-sm-offset-5 col-sm-2 text-center">
+						<a class="btn btn-primary " href="upload"> <span class="glyphicon glyphicon-upload"></span> 
+						Upload </a>
+			    </div>
+				<br>
 				<br>
 				<h4>List of All Uploaded Files</h4>
 

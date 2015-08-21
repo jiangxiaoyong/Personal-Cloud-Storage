@@ -43,12 +43,19 @@
 										 
                                   </form>
                                   <hr>
-                                  <button id="upload-button" class="btn btn-primary">
+									<a class="btn btn-primary" href="${pageContext.request.contextPath}/list">
+									<span class="glyphicon glyphicon-chevron-left"></span> Go Back</a>
+									
+                                  	<button id="upload-button" class="btn btn-primary pull-right">
                                          <span class="glyphicon glyphicon-upload"></span> Upload
-                                  </button>
+                                  	</button>
+                                  
+
+								  <!--  
                                   <a class="btn btn-primary pull-right" href="list"> <span
                                          class="glyphicon glyphicon-eye-open"></span> View All Uploads
                                   </a>
+                                  -->
                            </div>
                      </div>
               </div>
