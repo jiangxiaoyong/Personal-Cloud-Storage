@@ -1,7 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@page session="true"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta charset="utf-8" name="viewport"
@@ -73,11 +76,13 @@
 								<!-- Single button -->
 								<div class="btn-group">
 								  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								    Please Select <span class="caret"></span>
+								    Please Select
+								    <span class="caret"></span> 
 								  </button>
 								  <ul class="dropdown-menu">
 								    <li><a href="${pageContext.request.contextPath}/get/${dataFile.id}">Download</a></li>
-								    <li><a href="#">Delete</a></li>
+								    <li><a href="${pageContext.request.contextPath}/delete/${dataFile.id}" onclick="return confirm('Are you sure you want to delete this file?');">Delete</a></li>
+								    
 								  </ul>
 								</div>
 							</td>

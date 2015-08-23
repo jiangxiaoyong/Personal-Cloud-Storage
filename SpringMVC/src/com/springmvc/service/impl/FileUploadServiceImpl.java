@@ -27,7 +27,13 @@ public class FileUploadServiceImpl implements FileUploadService {
              
              return dao.getFile(id);
       }
-
+     
+      @Transactional
+      public void deleteFile(Long id) {
+             
+             dao.deleteFile(id);
+      }
+      
       @Transactional
       public UploadedFile saveFile(UploadedFile uploadedFile) {
              

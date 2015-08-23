@@ -23,6 +23,14 @@ public class FileUploadDaoImpl implements FileUploadDao {
       public UploadedFile getFile(Long id) {
              return (UploadedFile) getSession().get(UploadedFile.class, id);
       }
+      
+      public void deleteFile(Long id) {
+    	     UploadedFile file = getFile(id);
+    	     
+    	     if( file != null){
+    	    	 getSession().delete(file);
+    	     }          
+      }
 
       public UploadedFile saveFile(UploadedFile uploadedFile) {
              return (UploadedFile) getSession().merge(uploadedFile);

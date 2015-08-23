@@ -106,8 +106,8 @@ public class MainController {
     }
  
     @RequestMapping(value = "/uploadFiles", method = RequestMethod.POST)
-    public @ResponseBody
-    List<UploadedFile> upload(MultipartHttpServletRequest request,
+    public
+    String upload(MultipartHttpServletRequest request,
                  HttpServletResponse response) throws IOException {
 
     	  System.out.println("in upload");
@@ -132,7 +132,7 @@ public class MainController {
                  uploadedFiles.add(fileInfo);
           }
 
-          return uploadedFiles;
+          return "listFiles";
     }
 
     @RequestMapping(value = { "/list" })
@@ -163,6 +163,39 @@ public class MainController {
                  e.printStackTrace();
           }
     }
+    
+    @RequestMapping(value = "/delete/{fileId}")
+    public String deleteFile(@PathVariable("fileId") Long id){
+
+    	  UploadedFile dataFile = uploadService.getFile(id);	  	  
+	  	  String deleteFileName = getDeleteFilename(dataFile.getName());
+	  	  System.out.println("delete path = " + deleteFileName);
+	  	  
+	  	  //delete record in MySQL
+    	  uploadService.deleteFile(id);
+    	  
+    	  //delete stored on local disc
+    	  deleteFileFromLocalDisk(deleteFileName);
+    	  return "redirect:/list";
+
+    }
+    private void deleteFileFromLocalDisk(String path){
+    	try{
+    		
+    		File file = new File(path);
+        	
+    		if(file.delete()){
+    			System.out.println(file.getName() + " is deleted!");
+    		}else{
+    			System.out.println("Delete operation is failed.");
+    		}
+    	   
+    	}catch(Exception e){
+    		
+    		e.printStackTrace();
+    		
+    	}
+    }
 
     private void saveFileToLocalDisk(MultipartFile multipartFile)
                  throws IOException, FileNotFoundException {
@@ -183,6 +216,11 @@ public class MainController {
 
           return getDestinationLocation() + multipartFile.getOriginalFilename();
     }
+    
+    private String getDeleteFilename(String file) {
+
+        return getDestinationLocation() + file;
+  }
 
     private UploadedFile getUploadedFileInfo(MultipartFile multipartFile)
                  throws IOException {
