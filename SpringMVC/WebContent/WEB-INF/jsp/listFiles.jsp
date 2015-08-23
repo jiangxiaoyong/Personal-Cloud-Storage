@@ -68,9 +68,20 @@
 							</td>
 							
 							<td>
-								<a class="btn btn-primary" href="${pageContext.request.contextPath}/get/${dataFile.id}">
-									<span class="glyphicon glyphicon-download"></span> Download
-							</a></td>
+								<!--  <a class="btn btn-primary" href="${pageContext.request.contextPath}/get/${dataFile.id}">
+									<span class="glyphicon glyphicon-download"></span> Download </a>-->
+								<!-- Single button -->
+								<div class="btn-group">
+								  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    Please Select <span class="caret"></span>
+								  </button>
+								  <ul class="dropdown-menu">
+								    <li><a href="${pageContext.request.contextPath}/get/${dataFile.id}">Download</a></li>
+								    <li><a href="#">Delete</a></li>
+								  </ul>
+								</div>
+							</td>
+
 						</tr>
 					</c:forEach>
 				</tbody>
