@@ -20,20 +20,28 @@
 
 </head>
 <body>
-	<div class="container">
+	<div class="container-fluid">
 		<div class="panel panel-default">
 			<div class="panel-heading text-center">
 				<h3>My Cloud Storage</h3>
 			</div>
 			<div class="panel-body">
 				
-			    <div class="col-sm-offset-5 col-sm-2 text-center">
-						<a class="btn btn-primary " href="upload"> <span class="glyphicon glyphicon-upload"></span> 
-						Upload </a>
-			    </div>
+
+			    <div class="text-center">
+				    
+				    <a class="btn btn-primary btn-custom-size" href="upload"> <span class="glyphicon glyphicon-upload"></span> 
+							Upload </a>	
+					<a class="btn btn-primary btn-custom-size" href="upload"> <span class="glyphicon glyphicon glyphicon-folder-close"></span> 
+							New folder </a>			      
+				    
+				</div>
+
 				<br>
 				<br>
 				<h4>List of All Uploaded Files</h4>
+				
+
 
 			</div>
 			<table class="table table-hover table-condensed">

@@ -54,3 +54,8 @@
 .file-dropzone.drag-over {
 	outline: LightGreen solid 4px;
 }
+
+/* custom button size of panel */
+.btn-custom-size {
+    width: 150px !important;
+}
