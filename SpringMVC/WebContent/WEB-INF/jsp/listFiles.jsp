@@ -11,13 +11,16 @@
 	content="width=device-width, initial-scale=1">
 <title>My Cloud Storage</title>
 
-<link rel="stylesheet" type="text/css"
-	href="resources/libs/bootstrap-3.1.1/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css"
-	href="resources/libs/bootstrap-dialog/css/bootstrap-dialog.min.css">
-<link rel="stylesheet" type="text/css"
-	href="resources/css/style.css">
+	<link rel="stylesheet" type="text/css"
+		href="resources/libs/bootstrap-3.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="resources/libs/bootstrap-dialog/css/bootstrap-dialog.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="resources/css/style.css">
 
+	<!-- enter new folder name javascript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<div class="container-fluid">
@@ -30,18 +33,19 @@
 
 			    <div class="text-center">
 				    
-				    <a class="btn btn-primary btn-custom-size" href="upload"> <span class="glyphicon glyphicon-upload"></span> 
+				    <a class="btn btn-primary btn-custom-size" href="upload"> <span class="glyphicon glyphicon-cloud-upload"></span> 
 							Upload </a>	
-					<a class="btn btn-primary btn-custom-size" href="upload"> <span class="glyphicon glyphicon glyphicon-folder-close"></span> 
-							New folder </a>			      
-				    
+					<a class="btn btn-primary btn-custom-size" id="myBtn"> 
+					<span class="glyphicon glyphicon glyphicon-folder-close"></span> 
+							New folder </a>	
+									      
 				</div>
 
 				<br>
 				<br>
 				<h4>List of All Uploaded Files</h4>
 				
-
+				${requestScope['javax.servlet.forward.request_uri']}
 
 			</div>
 			<table class="table table-hover table-condensed">
@@ -101,11 +105,55 @@
 			</table>
 		</div>
 	</div>
+	
+	 <!---------- create new folder form ---------->
+    
+      <!-- Modal -->
+  	 <div class="modal fade" id="myModal" role="dialog">
+     <div class="modal-dialog">
+    
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4><span class="glyphicon glyphicon glyphicon-folder-close"></span> Folder</h4>
+	        </div>
+	        <div class="modal-body" >
+	          
+	          <form name='newFolderForm'
+			  action="<c:url value='./newFolder${requestScope["javax.servlet.forward.request_uri"]}' />" method='POST'>
+			  
+		            <div class="form-group">
+		              <label for="foldername"> Folder Name </label>
+		              <input type="text" class="form-control" placeholder="Enter your folder name" name='foldername'>
+		            </div>
+	
+		            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok-sign"></span> CREATE</button>
+		              
+		             <!-- used for transfer form data, debug -->
+		            <input type="hidden" name="${_csrf.parameterName}"
+					value="${_csrf.token}" />
+	          </form>
+	        </div>
+
+	      </div>
+      
+     </div>
+   </div>
 
 	<script type="text/javascript"
 		src="resources/libs/jquery/jquery-2.1.1.js"></script>
 	<script type="text/javascript"
 		src="resources/libs/bootstrap-3.1.1/js/bootstrap.js"></script>
+		
+	<!-- script for new folder name form -->
+	<script>
+	$(document).ready(function(){
+	    $("#myBtn").click(function(){
+	        $("#myModal").modal();
+	    });
+	});
+	</script>
 </body>
 
 </html>

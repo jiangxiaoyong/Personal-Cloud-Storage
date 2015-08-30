@@ -25,6 +25,7 @@
               <div class="panel panel-default">
                      <div class="panel-heading text-center">
                            <h3>My Cloud Storage</h3>
+                           <p>The context path is: ${pageContext.request.requestURI}.</p>
                      </div>
                      <div class="panel-body">
                            <div>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
@@ -18,15 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.springmvc.model.UploadedFile;
 import com.springmvc.service.FileUploadService;
 
 import org.apache.commons.io.FileUtils;
-
 import org.springframework.util.FileCopyUtils;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -94,13 +94,30 @@ public class MainController {
  
 	}
 	
-	/*-------------------------new example------------------------------------------*/
+	/*------------------------------------------------new example------------------------------------------*/
     @Autowired
     private FileUploadService uploadService;
+    
+    @RequestMapping(value = "/newFolder/**", method = RequestMethod.POST)
+    public void newFolder(HttpServletRequest request, HttpServletResponse response,@RequestParam("foldername") String foldername){
+          String entirePath = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+    	  
+    	  if(foldername != null){
+    		  // Save the folder to local disk
+    		  saveFolderToLocalDisk(foldername, entirePath);
+    		  
+    		  UploadedFile folderInfo = getUploadedFolderInfo(foldername, entirePath);
+    		  
+    		  // Save the folder info to database
+    		  saveFolderToDatabase(folderInfo);
+    	  }
 
-    @RequestMapping(value = { "/", "/upload" }, method = RequestMethod.GET)
-    public String home() {
+    }
+
+    @RequestMapping(value = { "upload" }, method = RequestMethod.GET)
+    public String home(HttpServletRequest request, HttpServletResponse response) {
           
+    	  System.out.println("request in upload" + request.getRequestURL().toString());
           // will be resolved to /views/fileUploader.jsp
           return "fileUploader";
     }
@@ -196,6 +213,35 @@ public class MainController {
     		
     	}
     }
+    
+    private void saveFolderToLocalDisk(String foldername, String entirePath){
+	  	  // parse the path string
+	  	  String[] splitedPath = entirePath.split("/");
+	
+	  	  //get new path to create new folder
+	  	  String path = getNewfolderPath(splitedPath);
+	  	  System.out.println("parent folder = " + path);
+  	  
+	  	  //create new folder
+		  File theDir = new File(path+foldername);
+		
+		  // if the directory does not exist, create it
+		  if (!theDir.exists()) {
+			    System.out.println("creating directory: " + theDir);
+			    boolean result = false;
+			
+			    try{
+			        theDir.mkdir();
+			        result = true;
+			    } 
+			    catch(SecurityException se){
+			        //handle it
+			    }        
+			    if(result) {    
+			        System.out.println("DIR created");  
+			    }
+		  }
+    }
 
     private void saveFileToLocalDisk(MultipartFile multipartFile)
                  throws IOException, FileNotFoundException {
@@ -211,6 +257,12 @@ public class MainController {
           return uploadService.saveFile(uploadedFile);
 
     }
+    
+    private UploadedFile saveFolderToDatabase(UploadedFile uploadedFolder) {
+
+        return uploadService.saveFile(uploadedFolder);
+
+  }
 
     private String getOutputFilename(MultipartFile multipartFile) {
 
@@ -220,8 +272,29 @@ public class MainController {
     private String getDeleteFilename(String file) {
 
         return getDestinationLocation() + file;
-  }
+    }
+    
+    private String getNewfolderPath(String[] str){
+    	
+    	String newStr = "";
+    	for(int i = 3; i < str.length; i++){
+    		newStr += str[i] + "/";
+    	}
+    	
+    	return getDestinationLocation() + newStr;
+    }
 
+    private UploadedFile getUploadedFolderInfo(String foldername, String entirePath){
+    	
+    	  UploadedFile folderInfo = new UploadedFile();
+    	  folderInfo.setName(foldername);
+    	  //folderInfo.setSize((long) 0);
+    	  folderInfo.setType("Folder");
+    	  folderInfo.setLocation(getNewfolderPath(entirePath.split("/")));
+    	  
+    	  return folderInfo;
+    	
+    }
     private UploadedFile getUploadedFileInfo(MultipartFile multipartFile)
                  throws IOException {
 
