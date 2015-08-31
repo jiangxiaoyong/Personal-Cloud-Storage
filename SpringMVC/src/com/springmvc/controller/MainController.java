@@ -99,7 +99,7 @@ public class MainController {
     private FileUploadService uploadService;
     
     @RequestMapping(value = "/newFolder/**", method = RequestMethod.POST)
-    public void newFolder(HttpServletRequest request, HttpServletResponse response,@RequestParam("foldername") String foldername){
+    public String newFolder(HttpServletRequest request, HttpServletResponse response,@RequestParam("foldername") String foldername){
           String entirePath = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
     	  
     	  if(foldername != null){
@@ -111,7 +111,7 @@ public class MainController {
     		  // Save the folder info to database
     		  saveFolderToDatabase(folderInfo);
     	  }
-
+    	  return "redirect:/list";
     }
 
     @RequestMapping(value = { "upload" }, method = RequestMethod.GET)
