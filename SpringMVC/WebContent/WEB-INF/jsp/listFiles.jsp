@@ -18,9 +18,7 @@
 	<link rel="stylesheet" type="text/css"
 		href="resources/css/style.css">
 
-	<!-- enter new folder name javascript -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 	<div class="container-fluid">
@@ -33,9 +31,9 @@
 
 			    <div class="text-center">
 				    
-				    <a class="btn btn-primary btn-custom-size" href="upload"> <span class="glyphicon glyphicon-cloud-upload"></span> 
+				    <a class="btn btn-primary btn-custom-size" href="upload" id="upload-btn"> <span class="glyphicon glyphicon-cloud-upload"></span> 
 							Upload </a>	
-					<a class="btn btn-primary btn-custom-size" id="myBtn"> 
+					<a class="btn btn-primary btn-custom-size" id="newFolder-btn"> 
 					<span class="glyphicon glyphicon glyphicon-folder-close"></span> 
 							New folder </a>	
 									      
@@ -48,7 +46,7 @@
 				${requestScope['javax.servlet.forward.request_uri']}
 
 			</div>
-			<table class="table table-hover table-condensed">
+			<table class="table table-hover table-condensed" id="my_table">
 				<thead>
 					<tr>
 						<th width="5%">S.N</th>
@@ -149,10 +147,31 @@
 	<!-- script for new folder name form -->
 	<script>
 	$(document).ready(function(){
-	    $("#myBtn").click(function(){
+	    $("#newFolder-btn").click(function(){
 	        $("#myModal").modal();
 	    });
+	    
+
 	});
+	
+	//JQury for slide down table row
+	$('#my_table > tbody > tr')
+	 .find('td')
+	 .wrapInner('<div style="display: none;" />')
+	 .parent()
+	 .find('td > div')
+	 .slideDown(500, function(){
+
+	  var $set = $(this);
+	  $set.replaceWith($set.contents());
+
+	 });
+	
+	$("#upload-btn").hide().fadeIn(700);
+	$("#newFolder-btn").hide().fadeIn(800);
+	
+	
+		
 	</script>
 </body>
 
