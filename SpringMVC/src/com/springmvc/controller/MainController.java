@@ -101,7 +101,6 @@ public class MainController {
     @RequestMapping(value = "/newFolder/**", method = RequestMethod.POST)
     public String newFolder(HttpServletRequest request, HttpServletResponse response,@RequestParam("foldername") String foldername){
           String entirePath = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
-    	  
     	  if(foldername != null){
     		  // Save the folder to local disk
     		  saveFolderToLocalDisk(foldername, entirePath);
@@ -152,13 +151,26 @@ public class MainController {
           return "listFiles";
     }
 
-    @RequestMapping(value = { "/list" })
-    public String listBooks(Map<String, Object> map) {
+    @RequestMapping(value = { "/list/**" })
+    public ModelAndView listBooks(HttpServletRequest request, HttpServletResponse response) {
+    	  String entirePath = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+    	  System.out.println("entire path= " + entirePath);
+    	  
+    	  String folderPath = getFolderPath(entirePath.split("/"));
+    	  if(folderPath.isEmpty()){
+    		  folderPath = "jxy/uploaded-files/";
+    	  }
+    	  System.out.println("foder path= " + folderPath);
+    	  List<UploadedFile> query_result = uploadService.listDocs(folderPath);
+    	  for(UploadedFile uf : query_result){
+    		  System.out.println("query result = " + uf.getLocation());
+    	  }
+    	  
+          ModelAndView model = new ModelAndView();
+          model.addObject("fileList", uploadService.listDocs(folderPath));
+          model.setViewName("listFiles");
 
-          map.put("fileList", uploadService.listFiles());
-
-          // will be resolved to /views/listFiles.jsp
-          return "listFiles";
+          return model;
     }
 
     @RequestMapping(value = "/get/{fileId}", method = RequestMethod.GET)
@@ -282,6 +294,18 @@ public class MainController {
     	}
     	
     	return getDestinationLocation() + newStr;
+    }
+    
+    private String getFolderPath(String[] str){
+    	String newStr = "";
+    	for(int i = 2; i < str.length; i++){
+    		newStr += str[i] + "/";
+    	}
+    	if(newStr.length() > 1){
+        	newStr = newStr.substring(0, newStr.length()-1);
+    	}
+  	
+    	return newStr;
     }
 
     private UploadedFile getUploadedFolderInfo(String foldername, String entirePath){

@@ -94,7 +94,8 @@
                 <div class="col-lg-8 col-lg-offset-2 text-center">
                     <h2 class="section-heading">RESTful Web Service</h2>
                     <hr class="light">
-                    <p class="text-faded">Technologies: JavaEE SpringMVC Spring Security Spring JDBC Hibernate MySQL JSP Servlet Maven HTML CSS Bootstrap JavaScript XML</p>
+                    <p class="text-faded">Back-end: JavaEE SpringMVC Spring Security Spring JDBC Hibernate MySQL JSP Servlet Maven</p>
+                    <p class="text-faded">Front-end: HTML CSS JQuery Bootstrap JavaScript </p>
                     <a href="#" class="btn btn-default btn-xl">Get Started!</a>
                 </div>
             </div>

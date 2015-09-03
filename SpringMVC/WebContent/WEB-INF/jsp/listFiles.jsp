@@ -12,11 +12,11 @@
 <title>My Cloud Storage</title>
 
 	<link rel="stylesheet" type="text/css"
-		href="resources/libs/bootstrap-3.1.1/css/bootstrap.min.css">
+		href="/resources/libs/bootstrap-3.1.1/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css"
-		href="resources/libs/bootstrap-dialog/css/bootstrap-dialog.min.css">
+		href="/resources/libs/bootstrap-dialog/css/bootstrap-dialog.min.css">
 	<link rel="stylesheet" type="text/css"
-		href="resources/css/style.css">
+		href="/resources/css/style.css">
 
 
 </head>
@@ -58,7 +58,7 @@
 				</thead>
 				<tbody>
 					<c:forEach items="${fileList}" var="dataFile" varStatus="loopCounter">
-						<tr>
+						<tr class='clickable-row' data-path="${dataFile.location}" data-type="${dataFile.type}" data-name="${dataFile.name}">
 							<td><c:out value="${loopCounter.count}" /></td>
 							<td><c:out value="${dataFile.name}" /></td>
 							<td><c:out value="${dataFile.type}" /></td>
@@ -140,9 +140,9 @@
    </div>
 
 	<script type="text/javascript"
-		src="resources/libs/jquery/jquery-2.1.1.js"></script>
+		src="/resources/libs/jquery/jquery-2.1.1.js"></script>
 	<script type="text/javascript"
-		src="resources/libs/bootstrap-3.1.1/js/bootstrap.js"></script>
+		src="/resources/libs/bootstrap-3.1.1/js/bootstrap.js"></script>
 		
 	<!-- script for new folder name form -->
 	<script>
@@ -167,8 +167,24 @@
 
 	 });
 	
+	//fade in button
 	$("#upload-btn").hide().fadeIn(700);
 	$("#newFolder-btn").hide().fadeIn(800);
+	
+	//clickable row
+    $(".clickable-row").click(function() {
+        
+        //pass in two parameters
+	  	var path = $(this).data("path");
+	  	var type = $(this).data("type");
+	  	var folderName = $(this).data("name");
+		var folderPath = "/list" + path + folderName;
+		//alert(folderPath);
+		
+		if(type == "Folder"){
+			window.document.location = folderPath;
+		}
+    });
 	
 	
 		

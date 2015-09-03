@@ -15,9 +15,9 @@
 	<title>Cloud Storage</title>
 
  
-	<link rel="stylesheet" type="text/css" href="resources/libs/bootstrap-3.1.1/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="resources/libs/bootstrap-dialog/css/bootstrap-dialog.min.css">
-	<link rel="stylesheet" type="text/css" href="resources/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/resources/libs/bootstrap-3.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/resources/libs/bootstrap-dialog/css/bootstrap-dialog.min.css">
+	<link rel="stylesheet" type="text/css" href="/resources/css/style.css">
 
 </head>
 <body>
@@ -63,14 +63,14 @@
        </div>
 
        <script type="text/javascript"
-              src="resources/libs/jquery/jquery-2.1.1.js"></script>
+              src="/resources/libs/jquery/jquery-2.1.1.js"></script>
        <script type="text/javascript"
-              src="resources/libs/bootstrap-3.1.1/js/bootstrap.js"></script>
+              src="/resources/libs/bootstrap-3.1.1/js/bootstrap.js"></script>
        <script type="text/javascript"
-              src="resources/libs/bootstrap-dialog/js/bootstrap-dialog.min.js"></script>
+              src="/resources/libs/bootstrap-dialog/js/bootstrap-dialog.min.js"></script>
        <script type="text/javascript"
-              src="resources/libs/dropzone.js"></script>
+              src="/resources/libs/dropzone.js"></script>
        <script type="text/javascript"
-              src="resources/js/app.js"></script>
+              src="/resources/js/app.js"></script>
 </body>
 </html>

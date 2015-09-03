@@ -21,6 +21,12 @@ public class FileUploadServiceImpl implements FileUploadService {
 
              return dao.listFiles();
       }
+      
+      @Transactional(readOnly = true)
+      public List<UploadedFile> listDocs(String folderName){
+
+             return dao.listDocs(folderName);
+      }
 
       @Transactional(readOnly = true)
       public UploadedFile getFile(Long id) {
