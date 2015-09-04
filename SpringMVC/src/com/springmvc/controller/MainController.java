@@ -113,10 +113,10 @@ public class MainController {
     	  return "redirect:/list";
     }
 
-    @RequestMapping(value = { "upload" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "/upload/**" }, method = RequestMethod.GET)
     public String home(HttpServletRequest request, HttpServletResponse response) {
           
-    	  System.out.println("request in upload" + request.getRequestURL().toString());
+    	  System.out.println("request in upload " + (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE));
           // will be resolved to /views/fileUploader.jsp
           return "fileUploader";
     }
@@ -156,10 +156,8 @@ public class MainController {
     	  String entirePath = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
     	  System.out.println("In list entire path= " + entirePath);
     	  
-    	  String folderPath = getFolderPath(entirePath.split("/"));
-    	  if(folderPath.isEmpty()){
-    		  folderPath = "jxy/uploaded-files";
-    	  }
+    	  String folderPath = getNewfolderPath(entirePath.split("/"));
+
     	  System.out.println("foder path= " + folderPath);
     	  List<UploadedFile> query_result = uploadService.listDocs(folderPath);
     	  for(UploadedFile uf : query_result){
@@ -302,17 +300,6 @@ public class MainController {
     	return newStr;
     }
     
-    private String getFolderPath(String[] str){
-    	String newStr = "";
-    	for(int i = 2; i < str.length; i++){
-    		newStr += str[i] + "/";
-    	}
-    	if(newStr.length() > 1){
-        	newStr = newStr.substring(0, newStr.length()-1);
-    	}
-  	
-    	return newStr;
-    }
 
     private UploadedFile getUploadedFolderInfo(String foldername, String entirePath){
     	

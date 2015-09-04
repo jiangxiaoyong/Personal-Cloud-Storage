@@ -31,7 +31,7 @@
 
 			    <div class="text-center">
 				    
-				    <a class="btn btn-primary btn-custom-size" href="upload" id="upload-btn"> <span class="glyphicon glyphicon-cloud-upload"></span> 
+				    <a class="btn btn-primary btn-custom-size" href="/upload${requestScope['javax.servlet.forward.request_uri']}" id="upload-btn"> <span class="glyphicon glyphicon-cloud-upload"></span> 
 							Upload </a>	
 					<a class="btn btn-primary btn-custom-size" id="newFolder-btn"> 
 					<span class="glyphicon glyphicon glyphicon-folder-close"></span> 
