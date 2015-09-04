@@ -154,11 +154,11 @@ public class MainController {
     @RequestMapping(value = { "/list/**" })
     public ModelAndView listBooks(HttpServletRequest request, HttpServletResponse response) {
     	  String entirePath = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
-    	  System.out.println("entire path= " + entirePath);
+    	  System.out.println("In list entire path= " + entirePath);
     	  
     	  String folderPath = getFolderPath(entirePath.split("/"));
     	  if(folderPath.isEmpty()){
-    		  folderPath = "jxy/uploaded-files/";
+    		  folderPath = "jxy/uploaded-files";
     	  }
     	  System.out.println("foder path= " + folderPath);
     	  List<UploadedFile> query_result = uploadService.listDocs(folderPath);
@@ -228,14 +228,16 @@ public class MainController {
     
     private void saveFolderToLocalDisk(String foldername, String entirePath){
 	  	  // parse the path string
+    	  System.out.println("save folder raw path = " + entirePath);
 	  	  String[] splitedPath = entirePath.split("/");
 	
 	  	  //get new path to create new folder
 	  	  String path = getNewfolderPath(splitedPath);
 	  	  System.out.println("parent folder = " + path);
+	  	  System.out.println("foldername " +foldername);
   	  
 	  	  //create new folder
-		  File theDir = new File(path+foldername);
+		  File theDir = new File(path + "/"+foldername);
 		
 		  // if the directory does not exist, create it
 		  if (!theDir.exists()) {
@@ -278,22 +280,26 @@ public class MainController {
 
     private String getOutputFilename(MultipartFile multipartFile) {
 
-          return getDestinationLocation() + multipartFile.getOriginalFilename();
+          return getDestinationLocation() + "/" + multipartFile.getOriginalFilename();
     }
     
     private String getDeleteFilename(String file) {
 
-        return getDestinationLocation() + file;
+        return getDestinationLocation() + "/" +file;
     }
     
     private String getNewfolderPath(String[] str){
     	
     	String newStr = "";
     	for(int i = 3; i < str.length; i++){
-    		newStr += str[i] + "/";
+    		newStr += "/" + str[i];
     	}
     	
-    	return getDestinationLocation() + newStr;
+    	//return getDestinationLocation() + newStr;
+    	if(newStr.isEmpty()){
+    		newStr = "/home/jxy/uploaded-files";
+    	}
+    	return newStr;
     }
     
     private String getFolderPath(String[] str){
@@ -332,6 +338,6 @@ public class MainController {
     }
 
     private String getDestinationLocation() {
-          return "/home/jxy/uploaded-files/";
+          return "/home/jxy/uploaded-files";
     }    
 }

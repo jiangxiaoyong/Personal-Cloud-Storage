@@ -119,7 +119,7 @@
 	        <div class="modal-body" >
 	          
 	          <form name='newFolderForm'
-			  action="<c:url value='./newFolder${requestScope["javax.servlet.forward.request_uri"]}' />" method='POST'>
+			  action="<c:url value='/newFolder${requestScope["javax.servlet.forward.request_uri"]}' />" method='POST'>
 			  
 		            <div class="form-group">
 		              <label for="foldername"> Folder Name </label>
@@ -178,7 +178,7 @@
 	  	var path = $(this).data("path");
 	  	var type = $(this).data("type");
 	  	var folderName = $(this).data("name");
-		var folderPath = "/list" + path + folderName;
+		var folderPath = "/list" + path + "/"+folderName;
 		//alert(folderPath);
 		
 		if(type == "Folder"){

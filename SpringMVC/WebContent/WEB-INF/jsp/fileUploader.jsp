@@ -29,7 +29,7 @@
                      </div>
                      <div class="panel-body">
                            <div>
-                                  <form id="dropzone-form" class="dropzone" method="post" action="./uploadFiles?${_csrf.parameterName}=${_csrf.token}"
+                                  <form id="dropzone-form" class="dropzone" method="post" action="/uploadFiles?${_csrf.parameterName}=${_csrf.token}"
                                          enctype="multipart/form-data">
 
                                          <div class="dz-default dz-message file-dropzone text-center well col-sm-12">
