@@ -114,19 +114,27 @@ public class MainController {
     }
 
     @RequestMapping(value = { "/upload/**" }, method = RequestMethod.GET)
-    public String home(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView home(HttpServletRequest request, HttpServletResponse response) {
           
-    	  System.out.println("request in upload " + (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE));
-          // will be resolved to /views/fileUploader.jsp
-          return "fileUploader";
+    	  System.out.println("request in upload first round " + (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE));
+          
+    	  ModelAndView model = new ModelAndView();
+    	  model.addObject("uploadPath", (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE));
+    	  model.setViewName("fileUploader");
+    	  return model;
     }
  
-    @RequestMapping(value = "/uploadFiles", method = RequestMethod.POST)
+    @RequestMapping(value = "/uploadFiles/**", method = RequestMethod.POST)
     public
     String upload(MultipartHttpServletRequest request,
                  HttpServletResponse response) throws IOException {
 
-    	  System.out.println("in upload");
+    	  String rawUploadPath = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+    	  System.out.println("request in upload second round" + rawUploadPath);
+    	  
+    	  String uploadFolderPath = getUploadFolderPath(rawUploadPath.split("/"));
+    	  System.out.println("uploadFolderPath " + uploadFolderPath );
+    	  
           // Getting uploaded files from the request object
           Map<String, MultipartFile> fileMap = request.getFileMap();
 
@@ -137,9 +145,9 @@ public class MainController {
           for (MultipartFile multipartFile : fileMap.values()) {
 
                  // Save the file to local disk
-                 saveFileToLocalDisk(multipartFile);
+                 saveFileToLocalDisk(multipartFile, uploadFolderPath);
 
-                 UploadedFile fileInfo = getUploadedFileInfo(multipartFile);
+                 UploadedFile fileInfo = getUploadedFileInfo(multipartFile,uploadFolderPath);
 
                  // Save the file info to database
                  fileInfo = saveFileToDatabase(fileInfo);
@@ -154,7 +162,7 @@ public class MainController {
     @RequestMapping(value = { "/list/**" })
     public ModelAndView listBooks(HttpServletRequest request, HttpServletResponse response) {
     	  String entirePath = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
-    	  System.out.println("In list entire path= " + entirePath);
+    	  System.out.println("In list, entire path= " + entirePath);
     	  
     	  String folderPath = getNewfolderPath(entirePath.split("/"));
 
@@ -255,11 +263,11 @@ public class MainController {
 		  }
     }
 
-    private void saveFileToLocalDisk(MultipartFile multipartFile)
+    private void saveFileToLocalDisk(MultipartFile multipartFile,String folderPath)
                  throws IOException, FileNotFoundException {
 
-          String outputFileName = getOutputFilename(multipartFile);
-
+          String outputFileName = getOutputFilename(multipartFile, folderPath);
+          System.out.println("outputFileName "  + outputFileName);
           FileCopyUtils.copy(multipartFile.getBytes(), new FileOutputStream(
                        outputFileName));
     }
@@ -276,9 +284,9 @@ public class MainController {
 
   }
 
-    private String getOutputFilename(MultipartFile multipartFile) {
+    private String getOutputFilename(MultipartFile multipartFile, String folderPath) {
 
-          return getDestinationLocation() + "/" + multipartFile.getOriginalFilename();
+          return getDestinationLocation() + "/" + folderPath + multipartFile.getOriginalFilename();
     }
     
     private String getDeleteFilename(String file) {
@@ -300,6 +308,22 @@ public class MainController {
     	return newStr;
     }
     
+    private String getUploadFolderPath(String[]str){
+    	
+    	String newStr = "";
+    	for(int i = 7; i < str.length; i++){
+    		newStr += str[i] + "/";
+    	}
+    	
+    	return newStr;
+    }
+    
+    private String getStoreLocation(String uploadFolderPath){
+    	
+    	String s = getDestinationLocation() + "/" + uploadFolderPath;
+    	s = s.substring(0, s.length()-1);
+    	return s;
+    }
 
     private UploadedFile getUploadedFolderInfo(String foldername, String entirePath){
     	
@@ -312,14 +336,14 @@ public class MainController {
     	  return folderInfo;
     	
     }
-    private UploadedFile getUploadedFileInfo(MultipartFile multipartFile)
+    private UploadedFile getUploadedFileInfo(MultipartFile multipartFile, String uploadFolderPath)
                  throws IOException {
 
           UploadedFile fileInfo = new UploadedFile();
           fileInfo.setName(multipartFile.getOriginalFilename());
           fileInfo.setSize(multipartFile.getSize());
           fileInfo.setType(multipartFile.getContentType());
-          fileInfo.setLocation(getDestinationLocation());
+          fileInfo.setLocation(getStoreLocation(uploadFolderPath));
 
           return fileInfo;
     }

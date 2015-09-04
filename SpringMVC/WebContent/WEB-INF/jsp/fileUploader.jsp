@@ -29,7 +29,7 @@
                      </div>
                      <div class="panel-body">
                            <div>
-                                  <form id="dropzone-form" class="dropzone" method="post" action="/uploadFiles?${_csrf.parameterName}=${_csrf.token}"
+                                  <form id="dropzone-form" class="dropzone" method="post" action="/uploadFiles${uploadPath}?${_csrf.parameterName}=${_csrf.token}"
                                          enctype="multipart/form-data">
 
                                          <div class="dz-default dz-message file-dropzone text-center well col-sm-12">
@@ -41,7 +41,8 @@
 
                                          <!-- this is were the previews should be shown. -->
                                          <div class="dropzone-previews"></div>
-										 
+										 <input type="hidden" name="${_csrf.parameterName}"
+										 value="${_csrf.token}" />
                                   </form>
                                   <hr>
 									<a class="btn btn-primary" href="${pageContext.request.contextPath}/list">
