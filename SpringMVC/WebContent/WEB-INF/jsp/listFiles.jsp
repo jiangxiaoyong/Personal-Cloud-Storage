@@ -35,7 +35,13 @@
 							Upload </a>	
 					<a class="btn btn-primary btn-custom-size" id="newFolder-btn"> 
 					<span class="glyphicon glyphicon glyphicon-folder-close"></span> 
-							New folder </a>	
+							New folder </a>
+					<a class="btn btn-primary btn-custom-size" href="/list" id="home-btn"> 
+						<span class="glyphicon glyphicon-home"></span> 
+								Home </a>
+					<a class="btn btn-primary btn-custom-size"  href="javascript:history.back()" id="back-btn"> 
+						<span class="glyphicon glyphicon-chevron-left"></span> 
+								Go Back </a>		
 									      
 				</div>
 
@@ -170,6 +176,8 @@
 	//fade in button
 	$("#upload-btn").hide().fadeIn(700);
 	$("#newFolder-btn").hide().fadeIn(800);
+	$("#home-btn").hide().fadeIn(900);
+	$("#back-btn").hide().fadeIn(1000);
 	
 	//clickable row
     $(".clickable-row").click(function() {
