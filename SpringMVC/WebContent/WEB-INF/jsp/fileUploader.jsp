@@ -45,7 +45,7 @@
 										 value="${_csrf.token}" />
                                   </form>
                                   <hr>
-									<a class="btn btn-primary" href="${pageContext.request.contextPath}/list">
+									<a class="btn btn-primary" href="${pageContext.request.contextPath}/list${folderPath}">
 									<span class="glyphicon glyphicon-chevron-left"></span> Go Back</a>
 									
                                   	<button id="upload-button" class="btn btn-primary pull-right">

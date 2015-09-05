@@ -118,11 +118,15 @@ public class MainController {
 
     @RequestMapping(value = { "/upload/**" }, method = RequestMethod.GET)
     public ModelAndView home(HttpServletRequest request, HttpServletResponse response) {
-          
-    	  System.out.println("request in upload first round " + (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE));
-          
+  	      String rawPath = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+    	  System.out.println("request in upload first round " + rawPath);
+    	  
+          String folderPath = getNewfolderPath(rawPath.split("/"));
+          System.out.println("request in upload first round refined " + folderPath);
+    	  
     	  ModelAndView model = new ModelAndView();
     	  model.addObject("uploadPath", (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE));
+    	  model.addObject("folderPath", folderPath);
     	  model.setViewName("fileUploader");
     	  return model;
     }
@@ -204,16 +208,18 @@ public class MainController {
     
     @RequestMapping(value = "/delete/{fileId}")
     public String deleteFile(@PathVariable("fileId") Long id){
-
+    	  
     	  UploadedFile dataFile = uploadService.getFile(id);	  	  
 	  	  System.out.println("delte id = " + id);
+	  	  System.out.println("delete location = " + dataFile.getLocation());
+	  	  String returnLocation = "redirect:/list" + dataFile.getLocation();
 	  	  
 	  	  //delete record in MySQL
 	  	  deleteFileFromeDatabase(dataFile.getName(),id);
     	    	  
     	  //delete stored on local disc
     	  deleteFileFromLocalDisk(dataFile.getName(), dataFile.getLocation());
-    	  return "redirect:/list";
+    	  return returnLocation;
 
     }
     
