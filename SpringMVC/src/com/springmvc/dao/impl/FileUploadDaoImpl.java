@@ -29,7 +29,17 @@ public class FileUploadDaoImpl implements FileUploadDao {
     	  List<UploadedFile> results = q.list();
     	  
     	  return results;
-   }
+      }
+      
+      public List<UploadedFile> getAllDeleteFiles(String folderName){
+    	  String sql = "SELECT * FROM uploaded_file WHERE location like '%" + folderName + "%'";
+    	  System.out.println("delete sql = " + sql);
+    	  SQLQuery q = getSession().createSQLQuery(sql);
+    	  q.addEntity(UploadedFile.class);
+    	  List<UploadedFile> results = q.list();
+    	  
+    	  return results;
+      }
 
       public UploadedFile getFile(Long id) {
              return (UploadedFile) getSession().get(UploadedFile.class, id);

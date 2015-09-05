@@ -27,6 +27,11 @@ public class FileUploadServiceImpl implements FileUploadService {
 
              return dao.listDocs(folderName);
       }
+      
+      @Transactional(readOnly = true)
+      public List<UploadedFile> getAllDeleteFiles(String folderName){
+    	   return dao.getAllDeleteFiles(folderName);
+      }
 
       @Transactional(readOnly = true)
       public UploadedFile getFile(Long id) {

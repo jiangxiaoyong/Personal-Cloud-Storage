@@ -101,6 +101,9 @@ public class MainController {
     @RequestMapping(value = "/newFolder/**", method = RequestMethod.POST)
     public String newFolder(HttpServletRequest request, HttpServletResponse response,@RequestParam("foldername") String foldername){
           String entirePath = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+          
+          String folderPath = getNewfolderPath(entirePath.split("/"));
+          String redirectPage = "redirect:/list" + folderPath;
     	  if(foldername != null){
     		  // Save the folder to local disk
     		  saveFolderToLocalDisk(foldername, entirePath);
@@ -110,7 +113,7 @@ public class MainController {
     		  // Save the folder info to database
     		  saveFolderToDatabase(folderInfo);
     	  }
-    	  return "redirect:/list";
+    	  return redirectPage;
     }
 
     @RequestMapping(value = { "/upload/**" }, method = RequestMethod.GET)
@@ -156,7 +159,7 @@ public class MainController {
                  uploadedFiles.add(fileInfo);
           }
 
-          return "listFiles";
+          return "redirect:/list";
     }
 
     @RequestMapping(value = { "/list/**" })
@@ -203,32 +206,61 @@ public class MainController {
     public String deleteFile(@PathVariable("fileId") Long id){
 
     	  UploadedFile dataFile = uploadService.getFile(id);	  	  
-	  	  String deleteFileName = getDeleteFilename(dataFile.getName());
-	  	  System.out.println("delete path = " + deleteFileName);
+	  	  System.out.println("delte id = " + id);
 	  	  
 	  	  //delete record in MySQL
-    	  uploadService.deleteFile(id);
-    	  
+	  	  deleteFileFromeDatabase(dataFile.getName(),id);
+    	    	  
     	  //delete stored on local disc
-    	  deleteFileFromLocalDisk(deleteFileName);
+    	  deleteFileFromLocalDisk(dataFile.getName(), dataFile.getLocation());
     	  return "redirect:/list";
 
     }
-    private void deleteFileFromLocalDisk(String path){
+    
+    private void deleteFileFromeDatabase(String folderName, Long id){
+    	//delete folder it self
+    	uploadService.deleteFile(id);
+    	
+    	//delete recursively
+    	List<UploadedFile> query_result = uploadService.getAllDeleteFiles(folderName);
+	  	for(UploadedFile uf : query_result){
+			  System.out.println("query result in Delete = " + uf.getId() + " Delete it !");
+			  uploadService.deleteFile(uf.getId());
+		}
+    	
+    }
+    private void deleteFileFromLocalDisk(String docName, String path){
+
     	try{
-    		
-    		File file = new File(path);
+
+        	System.out.println("delete full path " + path + docName);
         	
-    		if(file.delete()){
-    			System.out.println(file.getName() + " is deleted!");
-    		}else{
-    			System.out.println("Delete operation is failed.");
+    		File doc = new File(path + "/"+docName);
+        	
+    		if(!doc.exists()){
+    			System.out.println("Directory does not exist.");
+    			
+    		}else{    			
+    			delete(doc);			
     		}
     	   
     	}catch(Exception e){
     		
     		e.printStackTrace();
-    		
+			System.out.println("Delete operation is failed.");
+
+    	}
+    }
+    
+    private void delete(File doc) throws IOException {
+    	
+    	if(doc.isDirectory()){
+        	FileUtils.deleteDirectory(doc);
+        	System.out.println(doc.getName() + " is deleted!");
+    	}
+    	else{
+    		doc.delete();
+    		System.out.println(doc.getName() + " is deleted!");
     	}
     }
     

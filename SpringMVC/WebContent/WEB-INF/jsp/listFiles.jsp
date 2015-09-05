@@ -182,7 +182,7 @@
 		//alert(folderPath);
 		
 		if(type == "Folder"){
-			window.document.location = folderPath;
+			//window.document.location = folderPath;
 		}
     });
 	
