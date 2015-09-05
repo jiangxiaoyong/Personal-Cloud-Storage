@@ -58,10 +58,10 @@
 				</thead>
 				<tbody>
 					<c:forEach items="${fileList}" var="dataFile" varStatus="loopCounter">
-						<tr class='clickable-row' data-path="${dataFile.location}" data-type="${dataFile.type}" data-name="${dataFile.name}">
-							<td><c:out value="${loopCounter.count}" /></td>
-							<td><c:out value="${dataFile.name}" /></td>
-							<td><c:out value="${dataFile.type}" /></td>
+						<tr >
+							<td class='clickable-row' data-path="${dataFile.location}" data-type="${dataFile.type}" data-name="${dataFile.name}"><c:out value="${loopCounter.count}" /></td>
+							<td class='clickable-row' data-path="${dataFile.location}" data-type="${dataFile.type}" data-name="${dataFile.name}" ><c:out value="${dataFile.name}" /></td>
+							<td class='clickable-row' data-path="${dataFile.location}" data-type="${dataFile.type}" data-name="${dataFile.name}"><c:out value="${dataFile.type}" /></td>
 							
 							<td>
 								<c:choose>
@@ -182,7 +182,7 @@
 		//alert(folderPath);
 		
 		if(type == "Folder"){
-			//window.document.location = folderPath;
+			window.document.location = folderPath;
 		}
     });
 	
