@@ -1,0 +1,47 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "volumes": [
+    {
+      "name": "tomcat",
+      "host": {
+        "sourcePath": "/var/app/current"
+      }
+    }
+  ],
+  "containerDefinitions": [
+    {
+      "name": "tomcat",
+      "image": "tomcat:7-jre8",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": [
+        "mysql"
+      ],
+      "mountPoints": [
+        {
+          "sourceVolume": "tomcat",
+          "containerPath": "/usr/local/tomcat/webapps",
+          "readOnly": true
+        }
+      ]
+    },
+    {
+      "name": "mysql",
+      "image": "mysql",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 3306,
+          "containerPort":3306
+        }
+      ]
+    }
+  ]
+}

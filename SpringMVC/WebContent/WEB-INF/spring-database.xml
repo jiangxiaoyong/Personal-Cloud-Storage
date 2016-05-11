@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
 
 
@@ -9,7 +9,7 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
  
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/login" />
+		<property name="url" value="jdbc:mysql://#{systemEnvironment['MYSQL_PORT_3306_TCP_ADDR']}:#{systemEnvironment['MYSQL_PORT_3306_TCP_PORT']}/users" /> <!-- use environment variable -->
 		<property name="username" value="root" />
 		<property name="password" value="123" />
 	</bean>

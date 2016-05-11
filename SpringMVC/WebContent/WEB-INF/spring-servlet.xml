@@ -31,7 +31,7 @@
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	       
+
 	<!-- Defines a resolver implementation bean. It gets applied to all requests handled by that DispatcherServlet -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
     </bean>

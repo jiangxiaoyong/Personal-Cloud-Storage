@@ -341,7 +341,8 @@ public class MainController {
     	
     	//return getDestinationLocation() + newStr;
     	if(newStr.isEmpty()){
-    		newStr = "/home/jxy/uploaded-files";
+    		newStr = "/var/local/uploaded-files";
+			new File("/var/local/uploaded-files").mkdirs();
     	}
     	return newStr;
     }
@@ -387,6 +388,6 @@ public class MainController {
     }
 
     private String getDestinationLocation() {
-          return "/home/jxy/uploaded-files";
+          return "/var/local/uploaded-files";
     }    
 }
